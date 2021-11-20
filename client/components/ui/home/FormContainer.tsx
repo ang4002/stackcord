@@ -1,16 +1,26 @@
-import React from "react";
+import React, { MutableRefObject } from "react";
 
 interface Props {
   header: string;
+  handleSubmit: any;
+  submitFn: (...any) => any;
+  error: string;
 }
 
-const FormContainer: React.FC<Props> = ({ children, header }) => {
+const FormContainer: React.FC<Props> = ({
+  children,
+  header,
+  handleSubmit,
+  submitFn,
+  error,
+}) => {
   return (
     <>
-      <div>
+      <form onSubmit={handleSubmit(submitFn)}>
         <h1>{header}</h1>
         {children}
-      </div>
+        <p className="err-msg">{error}</p>
+      </form>
 
       <style jsx>{`
         h1 {
@@ -22,12 +32,16 @@ const FormContainer: React.FC<Props> = ({ children, header }) => {
           white-space: nowrap;
         }
 
-        div {
+        form {
           display: flex;
           flex-direction: column;
           width: 50%;
           justify-content: center;
           align-items: center;
+        }
+
+        .err-msg {
+          margin-top: 15px;
         }
       `}</style>
     </>

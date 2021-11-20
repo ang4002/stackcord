@@ -19,10 +19,12 @@ body {
 
 button {
   cursor: pointer;
+  transition: opacity 0.2s;
 }
 
 button:disabled {
   cursor: not-allowed;
+  opacity: 70%;
 }
 
 input:focus {
@@ -31,4 +33,30 @@ input:focus {
 
 input:focus::placeholder {
   color: transparent;
+}
+
+.err-msg {
+  color: var(--errorColor);
+  font-size: 0.7rem;
+}
+
+.wmde-markdown pre code {
+  background: var(--secondaryBackgroundColor) !important;
+  text-shadow: initial !important;
+}
+
+.wmde-markdown code {
+  background-color: #000;
+}
+
+.wmde-markdown pre code * {
+  background: var(--secondaryBackgroundColor) !important;
+}
+
+.w-md-editor * {
+  background: var(--tertiaryBackgroundColor) !important;
+}
+
+.w-md-editor-text-input {
+  -webkit-text-fill-color: initial !important;
 }

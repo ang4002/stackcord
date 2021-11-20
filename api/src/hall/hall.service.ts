@@ -20,15 +20,11 @@ export class HallService {
       .query()
       .findById(hallId)
       .withGraphFetched("[users]")
-      .withGraphJoined("[questions, questions.answers]");
+      .withGraphJoined("[questions.[user, answers]]");
   }
 
   public async getUserHalls(userId: string) {
-    return this.hallUserModel
-      .query()
-      .where({ userId })
-      .innerJoin("halls", "halls.id", "=", "halls_users.hall_id")
-      .select("*");
+    return this.hallModel.query().withGraphJoined("users").where("users.id", userId);
   }
 
   public async createHall({ name, anonymous }: CreateHallDto, user: User) {
@@ -36,15 +32,14 @@ export class HallService {
 
     const hall = await this.hallModel.query().insert({ name, code, anonymous });
     await this.hallUserModel.query().insert({ role: "teacher", hallId: hall.id, userId: user.id });
-    return this.hallUserModel
-      .query()
-      .findOne({ hallId: hall.id, userId: user.id })
-      .withGraphJoined("[hall, user]");
+    return this.getHall(hall.id);
   }
 
-  public async joinHall(hallId: string, user: User) {
-    await this.hallUserModel.query().insert({ role: "student", hallId, userId: user.id });
-    return this.hallUserModel.query().findOne({ hallId, userId: user.id }).withGraphJoined("[hall, user]");
+  public async joinHall(code: string, user: User) {
+    const hall = await this.hallModel.query().findOne({ code });
+    await this.isUserInHall(hall.id, user.id);
+    await this.hallUserModel.query().insert({ role: "student", hallId: hall.id, userId: user.id });
+    return this.getHall(hall.id);
   }
 
   public async editHall(hallId: string, user: User, { name, anonymous }: PatchHallDto) {

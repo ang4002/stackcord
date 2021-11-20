@@ -4,10 +4,21 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@hookform/resolvers": "^2.8.3",
+    "@uiw/react-md-editor": "^3.7.0",
+    "axios": "^0.24.0",
+    "axios-auth-refresh": "^3.2.1",
+    "date-fns": "^2.26.0",
     "next": "^12.0.3",
+    "next-remove-imports": "^1.0.6",
     "react": "^17.0.2",
+    "react-canvas-draw": "^1.2.1",
     "react-dom": "^17.0.2",
-    "react-query": "^3.32.3"
+    "react-hook-form": "^7.19.5",
+    "react-loading-skeleton": "^3.0.1",
+    "react-query": "^3.32.3",
+    "socket.io-client": "2.4.0",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "dev": "next",
@@ -17,6 +28,8 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.34",
+    "@types/react-canvas-draw": "^1.1.1",
+    "@types/socket.io-client": "^1.4.36",
     "typescript": "^4.4.4"
   }
 }
